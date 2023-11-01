@@ -33,7 +33,7 @@ def extract(source_url, source_username, source_password, execution_date, path):
         fr'{extr.file}',
         sheet_name='Отчет',
         header=None,
-        skiprows=11,
+        skiprows=12,
         dtype=str,
     )
 
