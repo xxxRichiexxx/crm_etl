@@ -152,7 +152,7 @@ def etl(data_type, offset=None, **context):
     else:
         execution_date = context['execution_date'].date().replace(day=1)
 
-    path = f"C:\\tmp\{execution_date}"
+    path = f"/tmp/{execution_date}"
 
     data = extract(source_url, source_username, source_password, execution_date, path)
     data = transform(data, execution_date, data_type)
