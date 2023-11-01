@@ -20,7 +20,7 @@ with DAG(
         'crm_dag',
         default_args=default_args,
         description='Получение данных из CRM.',
-        start_date=dt.datetime(2023, 9, 1),
+        start_date=dt.datetime(2022, 0, 1),
         schedule_interval='@monthly',
         catchup=True,
         max_active_runs=1
@@ -30,21 +30,34 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_stage_слой') as data_to_stage:
 
-        tasks = []
+        t2 = PythonOperator(
+            task_id=f'get_requests_offset_2',
+            python_callable=etl,
+            op_kwargs={
+                'offset': 2,
+                'data_type': 'stage_crm_requests',
+            },
+        )
 
-        for offset in range(0, 1):
-            tasks.append(
-                PythonOperator(
-                    task_id=f'get_requests_offset_{offset}',
-                    python_callable=etl,
-                    op_kwargs={
-                        'offset': offset,
-                        'data_type': 'stage_crm_requests',
-                    },
-                )
-            )
+        t1 = PythonOperator(
+            task_id=f'get_requests_offset_1',
+            python_callable=etl,
+            op_kwargs={
+                'offset': 1,
+                'data_type': 'stage_crm_requests',
+            },
+        )
 
-        tasks
+        t0 = PythonOperator(
+            task_id=f'get_requests_offset_0',
+            python_callable=etl,
+            op_kwargs={
+                'offset': 0,
+                'data_type': 'stage_crm_requests',
+            },
+        )
+
+        t2 >> t1 >> t0
 
     with TaskGroup('Загрузка_данных_в_dds_слой') as data_to_dds:
 
