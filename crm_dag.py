@@ -32,7 +32,7 @@ with DAG(
 
         tasks = []
 
-        for offset in range(0, 2):
+        for offset in range(0, 1):
             tasks.append(
                 PythonOperator(
                     task_id=f'get_requests_offset_{offset}',
