@@ -32,7 +32,8 @@ def extract(source_url, source_username, source_password, execution_date, path):
     result = pd.read_excel(
         fr'{extr.file}',
         sheet_name='Отчет',
-        header=11,
+        header=None,
+        skiprows=11,
         dtype=str,
     )
 
