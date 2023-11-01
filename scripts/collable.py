@@ -103,30 +103,27 @@ def load(dwh_engine, data, data_type, execution_date):
     """Загрузка данных в хранилище."""
 
     print('ЗАГРУЗКА ДАННЫХ')
-    if not data.empty:
 
-        print(data)
+    print(data)
 
-        command = f"""
-            SELECT DROP_PARTITIONS(
-                'sttgaz.{data_type}',
-                '{execution_date.replace(day=1)}',
-                '{execution_date.replace(day=1)}'
-            );
-        """
-        print(command)
+    command = f"""
+        SELECT DROP_PARTITIONS(
+            'sttgaz.{data_type}',
+            '{execution_date.replace(day=1)}',
+            '{execution_date.replace(day=1)}'
+        );
+    """
+    print(command)
 
-        dwh_engine.execute(command)
+    dwh_engine.execute(command)
 
-        data.to_sql(
-            f'{data_type}',
-            dwh_engine,
-            schema='sttgaz',
-            if_exists='append',
-            index=False,
-        )
-    else:
-        print('Нет новых данных для загрузки.')
+    data.to_sql(
+        f'{data_type}',
+        dwh_engine,
+        schema='sttgaz',
+        if_exists='append',
+        index=False,
+    )
 
 
 def etl(data_type, offset=None, **context):
@@ -156,5 +153,10 @@ def etl(data_type, offset=None, **context):
     path = f"/tmp/{execution_date}"
 
     data = extract(source_url, source_username, source_password, execution_date, path)
-    data = transform(data, execution_date, data_type)
-    load(dwh_engine, data, data_type, execution_date)
+
+    if not data.empty:
+        data = transform(data, execution_date, data_type)
+        load(dwh_engine, data, data_type, execution_date)
+    else:
+        print('Нет новых данных для загрузки.')
+
