@@ -159,4 +159,3 @@ def etl(data_type, offset=None, **context):
         load(dwh_engine, data, data_type, execution_date)
     else:
         print('Нет новых данных для загрузки.')
-
