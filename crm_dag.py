@@ -64,15 +64,16 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 
-        dm_crm_slow_requests = VerticaOperator(
+        dm_crm_requests = VerticaOperator(
                     task_id='dm_crm_requests',
                     vertica_conn_id='vertica',
                     sql='scripts/dm_crm_requests.sql',
                 )
+        dm_crm_requests
 
     with TaskGroup('Проверки') as data_checks:
 
-        dm_crm_slow_requests_check = VerticaOperator(
+        dm_crm_requests_check = VerticaOperator(
                     task_id='dm_crm_requests_check',
                     vertica_conn_id='vertica',
                     sql='scripts/dm_crm_requests_check.sql',
@@ -80,6 +81,7 @@ with DAG(
                         'dm': 'dm_crm_requests',
                     }
                 )
+        dm_crm_requests_check
 
     end = DummyOperator(task_id='Конец')
 
