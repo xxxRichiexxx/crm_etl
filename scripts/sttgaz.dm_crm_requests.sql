@@ -44,19 +44,19 @@ WITH
 		WHERE  r."Страна" = 'РФ'
 	)
 SELECT 
-	period
-	,KodDC
-	,Dealer
-	,Holding 
-	,Region
+	period													AS "Период"
+	,KodDC													AS "Код ДЦ"
+	,Dealer													AS "Дилер"
+	,Holding 												AS "Холдинг"
+	,Region													AS "Регион"
 	,"Страна"																											
-	,NomerObrashenia 
+	,NomerObrashenia 										AS "Номер обращения"
 	,"Скорость"
-	,IstochnicTrafica 
-	,Status
-	,DataSozdania
-	,DataSmeniStatusa
-	,Comments
+	,IstochnicTrafica 										AS "Источник трафика"
+	,Status													AS "Статус"
+	,DataSozdania											AS "Дата создания"
+	,DataSmeniStatusa										AS "Дата смены статуса"
+	,Comments												AS "Комментарии"
 	,CASE 
 		WHEN "Просрочено Да/Нет" = 1 AND "Количество просроченных обращений у дилера в тек. месяце" = 1 AND "Скорость" < INTERVAL '78 MINUTE'
 			THEN 0
