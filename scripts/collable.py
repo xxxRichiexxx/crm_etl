@@ -13,7 +13,7 @@ sys.path.append(CODE_DIR_PATH)
 from crm import CRMExtractor
 
 
-def extract(source_url, source_username, source_password, division=None, execution_date, path):
+def extract(source_url, source_username, source_password, execution_date, path, division=None):
     """Извлечение данных из источника."""
 
     print('ИЗВЛЕЧЕНИЕ ДАННЫХ')
@@ -152,7 +152,7 @@ def etl(table_name, division=None, offset=None, **context):
 
     path = f"/tmp/{execution_date}"
 
-    data = extract(source_url, source_username, source_password, division, execution_date, path)
+    data = extract(source_url, source_username, source_password, execution_date, path, division)
 
     if not data.empty:
         data = transform(data, execution_date, table_name)
