@@ -150,7 +150,10 @@ def etl(table_name, division=None, offset=None, **context):
     else:
         execution_date = context['execution_date'].date().replace(day=1)
 
-    path = f"/tmp/{execution_date}"
+    if division:
+        path = f"/tmp/requests/{division}/{execution_date}"
+    else:
+        path = f"/tmp/requests/ГАЗ/{execution_date}"
 
     data = extract(source_url, source_username, source_password, execution_date, path, division)
 

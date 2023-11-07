@@ -56,7 +56,7 @@ with DAG(
             },
         )
 
-        t2 >> t1 >> t0
+        [t2, t1, t0]
 
     with TaskGroup('Загрузка_данных_в_dds_слой') as data_to_dds:
 
