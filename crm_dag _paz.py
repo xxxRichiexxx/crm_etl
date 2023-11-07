@@ -16,11 +16,11 @@ default_args = {
     'retry_delay': dt.timedelta(minutes=30),
 }
 with DAG(
-        'crm_dag',
+        'crm_dag_paz',
         default_args=default_args,
-        description='Получение данных из CRM.',
+        description='Получение данных из CRM. ПАЗ',
         start_date=dt.datetime(2022, 1, 1),
-        schedule_interval='@daily',
+        schedule_interval='@monthly',
         catchup=True,
         max_active_runs=1
 ) as dag:
@@ -34,7 +34,7 @@ with DAG(
             python_callable=etl,
             op_kwargs={
                 'offset': 2,
-                'table_name': 'stage_crm_requests',
+                'data_type': 'stage_crm_requests_paz',
             },
         )
 
@@ -43,7 +43,7 @@ with DAG(
             python_callable=etl,
             op_kwargs={
                 'offset': 1,
-                'table_name': 'stage_crm_requests',
+                'data_type': 'stage_crm_requests_paz',
             },
         )
 
@@ -52,7 +52,7 @@ with DAG(
             python_callable=etl,
             op_kwargs={
                 'offset': 0,
-                'table_name': 'stage_crm_requests',
+                'data_type': 'stage_crm_requests_paz',
             },
         )
 
@@ -64,24 +64,21 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 
-        dm_crm_requests = VerticaOperator(
-                    task_id='dm_crm_requests',
-                    vertica_conn_id='vertica',
-                    sql='scripts/dm_crm_requests.sql',
-                )
-        dm_crm_requests
+        pass
 
     with TaskGroup('Проверки') as data_checks:
 
-        dm_crm_requests_check = VerticaOperator(
-                    task_id='dm_crm_requests_check',
-                    vertica_conn_id='vertica',
-                    sql='scripts/dm_crm_requests_check.sql',
-                    params={
-                        'dm': 'dm_crm_requests',
-                    }
-                )
-        dm_crm_requests_check
+        pass
+
+        # dm_crm_requests_check = VerticaOperator(
+        #             task_id='dm_crm_requests_check',
+        #             vertica_conn_id='vertica',
+        #             sql='scripts/dm_crm_requests_check.sql',
+        #             params={
+        #                 'dm': 'dm_crm_requests_paz',
+        #             }
+        #         )
+        # dm_crm_requests_check
 
     end = DummyOperator(task_id='Конец')
 

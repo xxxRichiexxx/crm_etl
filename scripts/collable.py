@@ -13,7 +13,7 @@ sys.path.append(CODE_DIR_PATH)
 from crm import CRMExtractor
 
 
-def extract(source_url, source_username, source_password, execution_date, path):
+def extract(source_url, source_username, source_password, division=None, execution_date, path):
     """Извлечение данных из источника."""
 
     print('ИЗВЛЕЧЕНИЕ ДАННЫХ')
@@ -27,7 +27,7 @@ def extract(source_url, source_username, source_password, execution_date, path):
         execution_date,
     )
 
-    extr.get_requests()
+    extr.get_requests(division)
 
     result = pd.read_excel(
         fr'{extr.file}',
@@ -50,13 +50,13 @@ def extract(source_url, source_username, source_password, execution_date, path):
     return result
 
 
-def transform(data, execution_date, data_type):
+def transform(data, execution_date, table_name):
     """Преобразование/трансформация данных."""
 
     print('ТРАНСФОРМАЦИЯ ДАННЫХ')
     print(data)
     
-    if data_type == 'stage_crm_requests':
+    if table_name IN ('stage_crm_requests', 'stage_crm_requests_paz'):
         data.columns = [
             "Skorost",
             "Region",
@@ -99,7 +99,7 @@ def transform(data, execution_date, data_type):
     return data
 
 
-def load(dwh_engine, data, data_type, execution_date):
+def load(dwh_engine, data, table_name, execution_date):
     """Загрузка данных в хранилище."""
 
     print('ЗАГРУЗКА ДАННЫХ')
@@ -108,7 +108,7 @@ def load(dwh_engine, data, data_type, execution_date):
 
     command = f"""
         SELECT DROP_PARTITIONS(
-            'sttgaz.{data_type}',
+            'sttgaz.{table_name}',
             '{execution_date.replace(day=1)}',
             '{execution_date.replace(day=1)}'
         );
@@ -118,7 +118,7 @@ def load(dwh_engine, data, data_type, execution_date):
     dwh_engine.execute(command)
 
     data.to_sql(
-        f'{data_type}',
+        f'{table_name}',
         dwh_engine,
         schema='sttgaz',
         if_exists='append',
@@ -126,7 +126,7 @@ def load(dwh_engine, data, data_type, execution_date):
     )
 
 
-def etl(data_type, offset=None, **context):
+def etl(table_name, division=None, offset=None, **context):
     """Запускаем ETL-процесс для заданного типа данных."""
 
     source_con = BaseHook.get_connection('crm')
@@ -152,10 +152,10 @@ def etl(data_type, offset=None, **context):
 
     path = f"/tmp/{execution_date}"
 
-    data = extract(source_url, source_username, source_password, execution_date, path)
+    data = extract(source_url, source_username, source_password, division, execution_date, path)
 
     if not data.empty:
-        data = transform(data, execution_date, data_type)
-        load(dwh_engine, data, data_type, execution_date)
+        data = transform(data, execution_date, table_name)
+        load(dwh_engine, data, table_name, execution_date)
     else:
         print('Нет новых данных для загрузки.')
