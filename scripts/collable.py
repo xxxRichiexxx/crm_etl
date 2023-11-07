@@ -56,7 +56,7 @@ def transform(data, execution_date, table_name):
     print('ТРАНСФОРМАЦИЯ ДАННЫХ')
     print(data)
     
-    if table_name IN ('stage_crm_requests', 'stage_crm_requests_paz'):
+    if table_name in ('stage_crm_requests', 'stage_crm_requests_paz'):
         data.columns = [
             "Skorost",
             "Region",
