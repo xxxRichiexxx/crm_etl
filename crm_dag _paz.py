@@ -34,7 +34,7 @@ with DAG(
             python_callable=etl,
             op_kwargs={
                 'offset': 2,
-                'data_type': 'stage_crm_requests_paz',
+                'table_name': 'stage_crm_requests_paz',
             },
         )
 
@@ -43,7 +43,7 @@ with DAG(
             python_callable=etl,
             op_kwargs={
                 'offset': 1,
-                'data_type': 'stage_crm_requests_paz',
+                'table_name': 'stage_crm_requests_paz',
             },
         )
 
@@ -52,11 +52,11 @@ with DAG(
             python_callable=etl,
             op_kwargs={
                 'offset': 0,
-                'data_type': 'stage_crm_requests_paz',
+                'table_name': 'stage_crm_requests_paz',
             },
         )
 
-        t2 >> t1 >> t0
+        [t2, t1, t0]
 
     with TaskGroup('Загрузка_данных_в_dds_слой') as data_to_dds:
 
