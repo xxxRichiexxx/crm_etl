@@ -96,7 +96,6 @@ def transform(data, execution_date, table_name):
         ]
     elif table_name in ('stage_crm_worklists'):
         data.columns = [
-            'INNClienta',
             'NoRabochegoLista',
             'DataSozdania',
             'Potrebnost',
@@ -107,6 +106,7 @@ def transform(data, execution_date, table_name):
             'EtapProdaz',
             'OcherednoeSobitie',
             'InitsiatorRL',
+            'INNClienta',
         ]        
 
     data['period'] = execution_date
