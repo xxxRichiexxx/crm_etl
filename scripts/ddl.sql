@@ -44,15 +44,15 @@ PARTITION BY (stage_crm_requests.period);
 DROP TABLE IF EXISTS sttgaz.stage_crm_worklists;
 CREATE TABLE sttgaz.stage_crm_worklists
 (
-    NoRabochegoLista int,
-    DataSozdania timestamp,
-    Potrebnost varchar(300),
+    NoRabochegoLista varchar(500),
+    DataSozdania varchar(300),
+    Potrebnost varchar(500),
     NaimenovanieCompanii varchar(500),
     Client varchar(500),
     OtvetstvenniProdavets varchar(300),
     PervichniContakt varchar(300),
     EtapProdaz varchar(200),
-    OcherednoeSobitie timestamp,
+    OcherednoeSobitie varchar(300),
     InitsiatorRL varchar(500),
     INNClienta varchar(200),
     period date
