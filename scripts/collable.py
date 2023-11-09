@@ -94,6 +94,20 @@ def transform(data, execution_date, table_name):
             'DataOcherednogoSobitiya',
             'OtvetstvenniyZaRL',
         ]
+    elif table_name in ('stage_crm_worklists'):
+        data.columns = [
+            'INNClienta',
+            'NoRabochegoLista',
+            'DataSozdania',
+            'Potrebnost',
+            'NaimenovanieCompanii',
+            'Client',
+            'OtvetstvenniProdavets',
+            'PervichniContakt',
+            'EtapProdaz',
+            'OcherednoeSobitie',
+            'InitsiatorRL',
+        ]        
 
     data['period'] = execution_date
     return data
