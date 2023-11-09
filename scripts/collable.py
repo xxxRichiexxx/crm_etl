@@ -13,7 +13,7 @@ sys.path.append(CODE_DIR_PATH)
 from crm import CRMExtractor
 
 
-def extract(source_url, source_username, source_password, execution_date, path, division=None):
+def extract(source_url, datatype, source_username, source_password, execution_date, path, division=None):
     """Извлечение данных из источника."""
 
     print('ИЗВЛЕЧЕНИЕ ДАННЫХ')
@@ -27,7 +27,7 @@ def extract(source_url, source_username, source_password, execution_date, path, 
         execution_date,
     )
 
-    extr.get_requests(division)
+    getattr(extr, f'get_{datatype}')(division)
 
     result = pd.read_excel(
         fr'{extr.file}',
@@ -126,7 +126,7 @@ def load(dwh_engine, data, table_name, execution_date):
     )
 
 
-def etl(table_name, division=None, offset=None, **context):
+def etl(table_name, datatype, division=None, offset=None, **context):
     """Запускаем ETL-процесс для заданного типа данных."""
 
     source_con = BaseHook.get_connection('crm')
@@ -151,11 +151,11 @@ def etl(table_name, division=None, offset=None, **context):
         execution_date = context['execution_date'].date().replace(day=1)
 
     if division:
-        path = f"/tmp/requests/{division}/{execution_date}"
+        path = f"/tmp/{datatype}/{division}/{execution_date}"
     else:
-        path = f"/tmp/requests/ГАЗ/{execution_date}"
+        path = f"/tmp/{datatype}/ГАЗ/{execution_date}"
 
-    data = extract(source_url, source_username, source_password, execution_date, path, division)
+    data = extract(source_url, datatype, source_username, source_password, execution_date, path, division)
 
     if not data.empty:
         data = transform(data, execution_date, table_name)

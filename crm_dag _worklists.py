@@ -16,7 +16,7 @@ default_args = {
     'retry_delay': dt.timedelta(minutes=30),
 }
 with DAG(
-        'crm_dag_paz',
+        'crm_dag_worklists',
         default_args=default_args,
         description='Получение данных из CRM. ПАЗ',
         start_date=dt.datetime(2022, 1, 1),
@@ -30,29 +30,32 @@ with DAG(
     with TaskGroup('Загрузка_данных_в_stage_слой') as data_to_stage:
 
         t2 = PythonOperator(
-            task_id=f'get_requests_offset_2',
+            task_id=f'get_worklists_offset_2',
             python_callable=etl,
             op_kwargs={
                 'offset': 2,
-                'table_name': 'stage_crm_requests_paz',
+                'table_name': 'stage_crm_worklists',
+                'datatype': 'worklists',
             },
         )
 
         t1 = PythonOperator(
-            task_id=f'get_requests_offset_1',
+            task_id=f'get_worklists_offset_1',
             python_callable=etl,
             op_kwargs={
                 'offset': 1,
-                'table_name': 'stage_crm_requests_paz',
+                'table_name': 'stage_crm_worklists',
+                'datatype': 'worklists',
             },
         )
 
         t0 = PythonOperator(
-            task_id=f'get_requests_offset_0',
+            task_id=f'get_worklists_offset_0',
             python_callable=etl,
             op_kwargs={
                 'offset': 0,
-                'table_name': 'stage_crm_requests_paz',
+                'table_name': 'stage_crm_worklists',
+                'datatype': 'worklists',
             },
         )
 

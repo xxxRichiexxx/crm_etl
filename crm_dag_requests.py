@@ -35,6 +35,7 @@ with DAG(
             op_kwargs={
                 'offset': 2,
                 'table_name': 'stage_crm_requests',
+                'datatype': 'requests',
             },
         )
 
@@ -44,6 +45,7 @@ with DAG(
             op_kwargs={
                 'offset': 1,
                 'table_name': 'stage_crm_requests',
+                'datatype': 'requests',
             },
         )
 
@@ -53,6 +55,7 @@ with DAG(
             op_kwargs={
                 'offset': 0,
                 'table_name': 'stage_crm_requests',
+                'datatype': 'requests',
             },
         )
 
