@@ -67,21 +67,17 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 
-        pass
+        dm_crm_worklists = VerticaOperator(
+                    task_id='dm_crm_worklists',
+                    vertica_conn_id='vertica',
+                    sql='scripts/dm_crm_worklists.sql',
+                )
+        dm_crm_worklists
 
     with TaskGroup('Проверки') as data_checks:
 
         pass
 
-        # dm_crm_requests_check = VerticaOperator(
-        #             task_id='dm_crm_requests_check',
-        #             vertica_conn_id='vertica',
-        #             sql='scripts/dm_crm_requests_check.sql',
-        #             params={
-        #                 'dm': 'dm_crm_requests_paz',
-        #             }
-        #         )
-        # dm_crm_requests_check
 
     end = DummyOperator(task_id='Конец')
 
