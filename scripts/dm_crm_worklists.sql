@@ -56,18 +56,18 @@ WITH
 	RL_vsego AS(
 		SELECT
 			KodDC
-			,NaimenovanieCompanii
+			,Dealer
 			,period
 			,COUNT(DISTINCT NomerRL)
 		FROM data
 		WHERE 
 			request_StatusRL IN ('Текущий', 'Сделка состоялась')
-		GROUP BY KodDC, NaimenovanieCompanii, period	
+		GROUP BY KodDC, Dealer, period	
 	),
 	RL_na_nachalnih_etapah AS( 
 		SELECT
 			KodDC
-			,NaimenovanieCompanii
+			,Dealer
 			,period
 			,COUNT(DISTINCT NomerRL)
 		FROM data
@@ -75,12 +75,12 @@ WITH
 			request_StatusRL IN ('Текущий', 'Сделка состоялась')
 			AND
 			worklist_EtapProdaz IN ('Первичный контакт', 'Потребности')
-		GROUP BY KodDC, NaimenovanieCompanii, period
+		GROUP BY KodDC, Dealer, period
 	)
 	SELECT
 		RL_vsego.period
 		,RL_vsego.KodDC
-		,RL_vsego.NaimenovanieCompanii
+		,RL_vsego.Dealer
 		,RL_vsego.COUNT 									AS "Всего РЛ"
 		,COALESCE(RL_na_nachalnih_etapah.COUNT, 0)			AS "РЛ на ранних этапах"
 	FROM RL_vsego
