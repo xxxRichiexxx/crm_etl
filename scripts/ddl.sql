@@ -58,3 +58,39 @@ CREATE TABLE sttgaz.stage_crm_worklists
     period date
 )
 PARTITION BY (period);
+
+DROP TABLE IF EXISTS sttgaz.stage_crm_sales;
+CREATE TABLE sttgaz.stage_crm_sales(
+    DataSozdaniaRL  varchar(300),
+    VIN  varchar(300),
+    Marka  varchar(300),
+    Model  varchar(300),
+    DataVidachi  varchar(300),
+    NomerRL  varchar(500),
+    IstochnicTrafica  varchar(100),
+    NomerObrashenia INT,
+    DataObrashenia  timestamp,
+    KodDC int,
+    Dealer varchar(500), 
+    Region varchar(500),
+    GorodDC varchar(300),
+    RegionalniManager varchar(300),
+    NomenclaturniyCode  varchar(300),
+    TipClienta  varchar(300),
+    Client  varchar(300),
+    SubiektClienta varchar(300),
+    SferaDeyatelnostiClienta varchar(300),
+    INNClienta varchar(300),
+    KPPClienta  varchar(300),
+    TegClienta   varchar(300),
+    FIOPocupatelia  varchar(300),
+    ClassTS   varchar(300),
+    NowiyBU   varchar(100),
+    TegRL   varchar(300),
+    ManagerPoProdaze   varchar(300),
+    OtvetstvenniyZaClienta  varchar(300),
+    TegSobitiya   varchar(300),
+    TipContacta  varchar(300),
+    period date
+)
+PARTITION BY (period);

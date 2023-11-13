@@ -16,11 +16,11 @@ default_args = {
     'retry_delay': dt.timedelta(minutes=30),
 }
 with DAG(
-        'crm_dag_worklists',
+        'crm_dag_sales',
         default_args=default_args,
-        description='Получение данных из CRM. Рабочие листы',
+        description='Получение данных из CRM. Продажи(Выдачи)',
         start_date=dt.datetime(2022, 1, 1),
-        schedule_interval='@daily',
+        schedule_interval='@monthly',
         catchup=True,
         max_active_runs=1
 ) as dag:
@@ -30,32 +30,32 @@ with DAG(
     with TaskGroup('Загрузка_данных_в_stage_слой') as data_to_stage:
 
         t2 = PythonOperator(
-            task_id=f'get_worklists_offset_2',
+            task_id=f'get_sales_offset_2',
             python_callable=etl,
             op_kwargs={
                 'offset': 2,
-                'table_name': 'stage_crm_worklists',
-                'datatype': 'worklists',
+                'table_name': 'stage_crm_sales',
+                'datatype': 'sales',
             },
         )
 
         t1 = PythonOperator(
-            task_id=f'get_worklists_offset_1',
+            task_id=f'get_sales_offset_1',
             python_callable=etl,
             op_kwargs={
                 'offset': 1,
-                'table_name': 'stage_crm_worklists',
-                'datatype': 'worklists',
+                'table_name': 'stage_crm_sales',
+                'datatype': 'sales',
             },
         )
 
         t0 = PythonOperator(
-            task_id=f'get_worklists_offset_0',
+            task_id=f'get_sales_offset_0',
             python_callable=etl,
             op_kwargs={
                 'offset': 0,
-                'table_name': 'stage_crm_worklists',
-                'datatype': 'worklists',
+                'table_name': 'stage_crm_sales',
+                'datatype': 'sales',
             },
         )
 
@@ -67,12 +67,7 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 
-        dm_crm_worklists = VerticaOperator(
-                    task_id='dm_crm_worklists',
-                    vertica_conn_id='vertica',
-                    sql='scripts/dm_crm_worklists.sql',
-                )
-        dm_crm_worklists
+        pass
 
     with TaskGroup('Проверки') as data_checks:
 

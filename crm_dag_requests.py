@@ -18,7 +18,7 @@ default_args = {
 with DAG(
         'crm_dag',
         default_args=default_args,
-        description='Получение данных из CRM.',
+        description='Получение данных из CRM. Обращения.',
         start_date=dt.datetime(2022, 1, 1),
         schedule_interval='@daily',
         catchup=True,
