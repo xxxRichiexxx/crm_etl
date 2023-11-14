@@ -58,7 +58,7 @@ def transform(data, execution_date, table_name):
     print('ТРАНСФОРМАЦИЯ ДАННЫХ')
     print(data)
 
-    date_transform = lambda date: dt.datetime.strptime(date, '%d.%m.%Y %H:%M')
+    date_transform = lambda date: dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
     
     if table_name in ('stage_crm_requests', 'stage_crm_requests_paz'):
         data.columns = [
