@@ -31,11 +31,17 @@ def extract(source_url, datatype, source_username, source_password, execution_da
 
     getattr(extr, f'get_{datatype}')(division)
 
+    skiprows = {
+        'requests': 12,
+        'worklists': 14,
+        'sales': 13,
+    }
+
     result = pd.read_excel(
         fr'{extr.file}',
         sheet_name='Отчет',
         header=None,
-        skiprows=12 if datatype=='requests' else 14,
+        skiprows=skiprows[datatype],
         dtype=str,
     )
 
@@ -156,6 +162,10 @@ def transform(data, execution_date, table_name):
             'TegSobitiya',
             'TipContacta',
         ]
+        min_date = min(data['DataVidachi'].apply(date_transform)).date()
+        max_date = max(data['DataVidachi'].apply(date_transform)).date()
+        if min_date.replace(day=1) != execution_date or max_date.replace(day=1) != execution_date:
+            raise Exception('Диапазон получаемых данных не совпадает с периодом!')
 
     data['period'] = execution_date
     return data
