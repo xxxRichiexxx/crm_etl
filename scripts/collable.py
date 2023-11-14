@@ -4,7 +4,9 @@ import os
 import sys
 import sqlalchemy as sa
 from urllib.parse import quote
+import datetime as dt
 from airflow.hooks.base import BaseHook
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CODE_DIR_PATH = os.path.join(BASE_DIR, 'lib')
@@ -55,6 +57,8 @@ def transform(data, execution_date, table_name):
 
     print('ТРАНСФОРМАЦИЯ ДАННЫХ')
     print(data)
+
+    date_transform = lambda date: dt.datetime.strptime(date, '%d.%m.%Y %H:%M')
     
     if table_name in ('stage_crm_requests', 'stage_crm_requests_paz'):
         data.columns = [
@@ -95,8 +99,8 @@ def transform(data, execution_date, table_name):
             'OtvetstvenniyZaRL',
         ]
 
-        if min(data['DataSozdania']) != execution_date \
-            or max(data['DataSozdania']) != execution_date:
+        if min(data['DataSozdania'].apply(date_transform)).date != execution_date \
+            or max(data['DataSozdania'].apply(date_transform)).date != execution_date:
             raise Exception('Диапазон получаемых данных не совпадает с периодом!')
         
     elif table_name in ('stage_crm_worklists'):
