@@ -152,7 +152,7 @@ def load(dwh_engine, data, table_name, execution_date):
     print('ЗАГРУЗКА ДАННЫХ')
 
     with pd.option_context(                       
-        'display.max_columns', 10,
+        'display.max_columns', 12,
     ):
         print(data)
 
