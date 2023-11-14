@@ -35,7 +35,7 @@ def extract(source_url, datatype, source_username, source_password, execution_da
         fr'{extr.file}',
         sheet_name='Отчет',
         header=None,
-        skiprows=12,
+        skiprows=12 if datatype='requests' else 13,
         dtype=str,
     )
 
