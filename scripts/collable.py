@@ -94,6 +94,9 @@ def transform(data, execution_date, table_name):
             'DataOcherednogoSobitiya',
             'OtvetstvenniyZaRL',
         ]
+
+        print(min(data['DataSozdania']), max(data['DataSozdania']), execution_date)
+        
     elif table_name in ('stage_crm_worklists'):
         data.columns = [
             'NoRabochegoLista',
