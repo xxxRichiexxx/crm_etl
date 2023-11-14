@@ -99,8 +99,8 @@ def transform(data, execution_date, table_name):
             'OtvetstvenniyZaRL',
         ]
 
-        min_date = min(data['DataSozdania'].apply(date_transform)).date
-        max_date = max(data['DataSozdania'].apply(date_transform)).date
+        min_date = min(data['DataSozdania'].apply(date_transform)).date()
+        max_date = max(data['DataSozdania'].apply(date_transform)).date()
         if min_date.replace(day=1) != execution_date or max_date.replace(day=1) != execution_date:
             raise Exception('Диапазон получаемых данных не совпадает с периодом!')
         
