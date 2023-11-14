@@ -95,7 +95,9 @@ def transform(data, execution_date, table_name):
             'OtvetstvenniyZaRL',
         ]
 
-        print(min(data['DataSozdania']), max(data['DataSozdania']), execution_date)
+        if min(data['DataSozdania']).date != execution_date \
+            or max(data['DataSozdania']).date != execution_date:
+            raise Exception('Диапазон получаемых данных не совпадает с периодом!')
         
     elif table_name in ('stage_crm_worklists'):
         data.columns = [
@@ -154,10 +156,7 @@ def load(dwh_engine, data, table_name, execution_date):
 
     print('ЗАГРУЗКА ДАННЫХ')
 
-    with pd.option_context(                       
-        'display.max_columns', 12,
-    ):
-        print(data)
+    print(data)
 
     command = f"""
         SELECT DROP_PARTITIONS(
