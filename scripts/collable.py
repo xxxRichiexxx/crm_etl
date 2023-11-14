@@ -151,7 +151,10 @@ def load(dwh_engine, data, table_name, execution_date):
 
     print('ЗАГРУЗКА ДАННЫХ')
 
-    print(data)
+    with pd.option_context(                       
+        'display.max_columns', None,
+    ):
+        print(data)
 
     command = f"""
         SELECT DROP_PARTITIONS(
