@@ -95,8 +95,8 @@ def transform(data, execution_date, table_name):
             'OtvetstvenniyZaRL',
         ]
 
-        if min(data['DataSozdania']).date != execution_date \
-            or max(data['DataSozdania']).date != execution_date:
+        if min(data['DataSozdania']) != execution_date \
+            or max(data['DataSozdania']) != execution_date:
             raise Exception('Диапазон получаемых данных не совпадает с периодом!')
         
     elif table_name in ('stage_crm_worklists'):
