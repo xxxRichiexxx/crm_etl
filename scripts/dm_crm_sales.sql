@@ -7,9 +7,9 @@ SELECT
 	,Region
 	,GorodDC
 	,IMPLODE(VIN)											AS "VINы"
-	,COUNT(VIN)												AS "Реализовано"
-	,COUNT(CASE WHEN NowiyBU = 'Новый' THEN 1 END)			AS "Реализовано новых"
-	,COUNT(CASE WHEN NowiyBU = 'С пробегом' THEN 1 END)		AS "Реализовано с пробегом"
+	,COUNT(VIN)												AS "Продано"
+	,COUNT(CASE WHEN NowiyBU = 'Новый' THEN 1 END)			AS "Продано новых"
+	,COUNT(CASE WHEN NowiyBU = 'С пробегом' THEN 1 END)		AS "Продано с пробегом"
 FROM sttgaz.stage_crm_sales s
 GROUP BY
 	period
