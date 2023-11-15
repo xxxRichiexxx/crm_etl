@@ -84,6 +84,15 @@ with DAG(
                         'dm': 'dm_crm_worklists',
                     }
                 )
+        
+        dm_crm_worklists_check_2 = VerticaOperator(
+                    task_id='dm_crm_worklists_check_2',
+                    vertica_conn_id='vertica',
+                    sql='scripts/dm_crm_worklists_check_2.sql',
+                    params={
+                        'dm': 'dm_crm_worklists',
+                    }
+                )
 
 
     end = DummyOperator(task_id='Конец')
