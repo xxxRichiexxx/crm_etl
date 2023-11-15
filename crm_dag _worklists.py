@@ -20,7 +20,7 @@ with DAG(
         default_args=default_args,
         description='Получение данных из CRM. Рабочие листы',
         start_date=dt.datetime(2022, 1, 1),
-        schedule_interval='@monthly',
+        schedule_interval='@daily',
         catchup=True,
         max_active_runs=1
 ) as dag:
@@ -76,7 +76,14 @@ with DAG(
 
     with TaskGroup('Проверки') as data_checks:
 
-        pass
+        dm_crm_worklists_check = VerticaOperator(
+                    task_id='dm_crm_worklists_check',
+                    vertica_conn_id='vertica',
+                    sql='scripts/dm_crm_worklists_check.sql',
+                    params={
+                        'dm': 'dm_crm_worklists',
+                    }
+                )
 
 
     end = DummyOperator(task_id='Конец')
