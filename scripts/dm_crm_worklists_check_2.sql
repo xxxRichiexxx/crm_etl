@@ -6,6 +6,6 @@ WITH sq AS(
 )
 SELECT 
     '{{params.dm}}',
-    'comparison_with_target:' || ' 402=?',
+    'comparison_with_target:' || ' 392=?',
     NOW(),
-    402 = (SELECT * FROM sq);
+    392 = (SELECT * FROM sq);
