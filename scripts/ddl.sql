@@ -22,7 +22,7 @@ CREATE TABLE sttgaz.stage_crm_requests
     Client varchar(500),
     Phone varchar(500),
     Email varchar(500),
-    TextObrashenia varchar(50000),
+    TextObrashenia long varchar,
     SoglasieNaObrabotcuPD varchar(500),
     SoglasieNaPoluchenieInformacii varchar(500),
     ID varchar(500),

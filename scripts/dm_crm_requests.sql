@@ -33,6 +33,7 @@ WITH
 				WHEN 
 					("Скорость" > INTERVAL '60 MINUTE' OR (r.Skorost = '00:00' AND r.DataSmeniStatusa IS NULL)) 
 					AND r.Status <> 'Ошибочное (просрочено)'
+					AND r.Prichina <> 'Клиент не оставил контакты'
 					AND NomerObrashenia NOT IN 
                         (169682, 169690, 170332, 170339, 170341, 170369, 170370, 170403, 170418,
                         170457, 170458, 170474, 170601, 171243, 171243, 171270, 169071, 167482,
@@ -70,3 +71,6 @@ FROM sq;
 
 GRANT SELECT ON TABLE sttgaz.dm_crm_requests TO PowerBI_Integration WITH GRANT OPTION;
 COMMENT ON VIEW sttgaz.dm_crm_requests IS 'Витрина с обращениями из CRM';
+
+---Причина перевода в статус = Клиент не оставил контакты
+---2023-11-01   67

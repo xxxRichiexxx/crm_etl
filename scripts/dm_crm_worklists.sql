@@ -91,3 +91,5 @@ WITH
 GRANT SELECT ON TABLE sttgaz.dm_crm_worklists TO PowerBI_Integration WITH GRANT OPTION;
 COMMENT ON VIEW sttgaz.dm_crm_worklists IS 'Витрина с статистикой по рабочим листам из CRM';
 
+---Причина перевода в статус = Клиент не оставил контакты
+---2023-11-01   67
