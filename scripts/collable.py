@@ -35,6 +35,7 @@ def extract(source_url, datatype, source_username, source_password, execution_da
         'requests': 12,
         'worklists': 14,
         'sales': 13,
+        'stats': 14,
     }
 
     result = pd.read_excel(
@@ -166,6 +167,27 @@ def transform(data, execution_date, table_name):
         max_date = max(data['DataVidachi'].apply(date_transform)).date()
         if min_date.replace(day=1) != execution_date or max_date.replace(day=1) != execution_date:
             raise Exception('Диапазон получаемых данных не совпадает с периодом!')
+        
+    elif table_name in('stage_crm_stats'):
+        data.columns = [
+            'Region',
+            'Holding',
+            'Dealer',
+            'TegiClienta', 
+            'TegiRL',
+            'RLsoStatusomTekushiy',
+            'RLsoStatusomSdelkaSostoyalas',
+            'RLnaEtapePervichniyKontact',
+            'RLnaEtapePervichniyKontact%',
+            'RLnaEtapePotrebnosti',
+            'RLnaEtapePotrebnosti%',
+            'RLnaNachalnihEtapahPervichniyContact+Potrebnosti',
+            'RLnaNachalnihEtapahPervichniyContact+Potrebnosti%',
+            'SootvetstvieTrebovaniyam1',
+            'RLsNenaznachennimSleduyushimSobitiem',
+            'RLsNenaznachennimSleduyushimSobitiem%',
+            'SootvetstvieTrebovaniyam2',
+        ]
 
     data['period'] = execution_date
     return data

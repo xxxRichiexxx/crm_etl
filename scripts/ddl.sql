@@ -94,3 +94,26 @@ CREATE TABLE sttgaz.stage_crm_sales(
     period date
 )
 PARTITION BY (period);
+
+DROP TABLE IF EXISTS sttgaz.stage_crm_stats;
+CREATE TABLE sttgaz.stage_crm_stats (
+    "Region" varchar(800),
+    "Holding" varchar(800),
+    "Dealer" varchar(800),
+    "TegiClienta" varchar(800), 
+    "TegiRL" varchar(800),
+    "RLsoStatusomTekushiy" varchar(800),
+    "RLsoStatusomSdelkaSostoyalas" varchar(800),
+    "RLnaEtapePervichniyKontact" varchar(800),
+    "RLnaEtapePervichniyKontact%" varchar(800),
+    "RLnaEtapePotrebnosti" varchar(800),
+    "RLnaEtapePotrebnosti%" varchar(800),
+    "RLnaNachalnihEtapahPervichniyContact+Potrebnosti" varchar(800),
+    "RLnaNachalnihEtapahPervichniyContact+Potrebnosti%" varchar(800),
+    "SootvetstvieTrebovaniyam1" varchar(800),
+    "RLsNenaznachennimSleduyushimSobitiem" varchar(800),
+    "RLsNenaznachennimSleduyushimSobitiem%" varchar(800),
+    "SootvetstvieTrebovaniyam2" varchar(800),
+    period date   
+)
+PARTITION BY (period);
