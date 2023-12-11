@@ -102,6 +102,7 @@ CREATE TABLE sttgaz.stage_crm_stats (
     "Dealer" varchar(800),
     "TegiClienta" varchar(800), 
     "TegiRL" varchar(800),
+    IstochnicTrafica  varchar(300),
     "RLsoStatusomTekushiy" varchar(800),
     "RLsoStatusomSdelkaSostoyalas" varchar(800),
     "RLnaEtapePervichniyKontact" varchar(800),

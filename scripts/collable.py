@@ -175,6 +175,7 @@ def transform(data, execution_date, table_name):
             'Dealer',
             'TegiClienta', 
             'TegiRL',
+            'IstochnicTrafica',
             'RLsoStatusomTekushiy',
             'RLsoStatusomSdelkaSostoyalas',
             'RLnaEtapePervichniyKontact',
