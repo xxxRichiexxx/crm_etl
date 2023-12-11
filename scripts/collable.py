@@ -40,7 +40,7 @@ def extract(source_url, datatype, source_username, source_password, execution_da
 
     result = pd.read_excel(
         fr'{extr.file}',
-        sheet_name='Отчет',
+        sheet_name='Worksheet' if datatype == 'stats' else 'Отчет',
         header=None,
         skiprows=skiprows[datatype],
         dtype=str,
