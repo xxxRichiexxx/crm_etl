@@ -16,9 +16,9 @@ default_args = {
     'retry_delay': dt.timedelta(minutes=30),
 }
 with DAG(
-        'crm_dag_worklists',
+        'crm_dag_stats',
         default_args=default_args,
-        description='Получение данных из CRM. Рабочие листы',
+        description='Получение данных из CRM. Статистика',
         start_date=dt.datetime(2022, 1, 1),
         schedule_interval='@monthly',
         catchup=True,
@@ -67,6 +67,8 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 
+        pass
+
         # dm_crm_worklists = VerticaOperator(
         #             task_id='dm_crm_worklists',
         #             vertica_conn_id='vertica',
@@ -75,6 +77,8 @@ with DAG(
         # dm_crm_worklists
 
     with TaskGroup('Проверки') as data_checks:
+
+        pass
 
         # dm_crm_worklists_check = VerticaOperator(
         #             task_id='dm_crm_worklists_check',
