@@ -21,7 +21,7 @@ SELECT
     s."SootvetstvieTrebovaniyam2"								AS "Соответствие требованиям 0/20 баллов 2",
     s.period 													AS "Период"
 FROM sttgaz.stage_crm_stats s
-LEFT JOIN sttgaz.stage_crm_requests r
+LEFT JOIN (SELECT DISTINCT KodDC, Dealer FROM sttgaz.stage_crm_requests) r
 	ON s.Dealer = r.Dealer; 
 
 GRANT SELECT ON TABLE sttgaz.dm_crm_stats TO PowerBI_Integration WITH GRANT OPTION;

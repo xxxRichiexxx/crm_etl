@@ -59,6 +59,7 @@ CREATE TABLE sttgaz.stage_crm_worklists
 )
 PARTITION BY (period);
 
+
 DROP TABLE IF EXISTS sttgaz.stage_crm_sales;
 CREATE TABLE sttgaz.stage_crm_sales(
     DataSozdaniaRL  varchar(300),
@@ -94,6 +95,7 @@ CREATE TABLE sttgaz.stage_crm_sales(
     period date
 )
 PARTITION BY (period);
+
 
 DROP TABLE IF EXISTS sttgaz.stage_crm_stats;
 CREATE TABLE sttgaz.stage_crm_stats (
