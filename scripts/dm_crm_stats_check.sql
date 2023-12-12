@@ -8,4 +8,4 @@ SELECT
     '{{params.dm}}',
     'comparison_with_target:' || ' 1238=?',
     NOW(),
-    1238 = (SELECT * FROM sq);
+    277 = (SELECT * FROM sq);
