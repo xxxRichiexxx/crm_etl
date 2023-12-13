@@ -29,6 +29,10 @@ WITH
 			,r.DataSozdania
 			,r.DataSmeniStatusa
 			,r.Comments
+			,TipZaiavki
+			,TegiClienta
+			,StatusRL
+			,EtapProdaz		
 			,CASE
 				WHEN 
 					("Скорость" > INTERVAL '60 MINUTE' OR (r.Skorost = '00:00' AND r.DataSmeniStatusa IS NULL)) 
@@ -39,7 +43,7 @@ WITH
                         170457, 170458, 170474, 170601, 171243, 171243, 171270, 169071, 167482,
 						173091, 173093, 169884, 168385, 169129 , 169138, 169146, 169158, 172855,
 						172760, 167478, 180122, 180227)
-					THEN 1			
+					THEN 1	
 			END 																												AS "Просрочено Да/Нет"
 			,COUNT(NomerObrashenia)	OVER (PARTITION BY period, Dealer)															AS "Количество обращений у дилера в тек. месяце"
 			,COUNT("Просрочено Да/Нет")	OVER (PARTITION BY period, Dealer)														AS "Количество просроченных обращений у дилера в тек. месяце"
@@ -60,6 +64,10 @@ SELECT
 	,DataSozdania											AS "Дата создания"
 	,DataSmeniStatusa										AS "Дата смены статуса"
 	,Comments												AS "Комментарии"
+	,TipZaiavki
+	,TegiClienta
+	,StatusRL
+	,EtapProdaz		
 	,CASE 
 		WHEN "Просрочено Да/Нет" = 1 AND "Количество просроченных обращений у дилера в тек. месяце" = 1 AND "Скорость" < INTERVAL '78 MINUTE'
 			THEN 0
